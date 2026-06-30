@@ -368,7 +368,7 @@ mainStroke.Parent = mainFrame
 local titleBar = Instance.new("TextLabel")
 titleBar.Size = UDim2.new(1, 0, 0, 30)
 titleBar.BackgroundColor3 = Color3.fromRGB(45, 45, 50)
-titleBar.Text = "   Tudo ROSAA"
+titleBar.Text = "  Tudo ROSAA"
 titleBar.TextColor3 = Color3.new(1, 1, 1)
 titleBar.TextXAlignment = Enum.TextXAlignment.Left
 local fontSuccess, _ = pcall(function() titleBar.Font = Enum.Font.FredokaOne end)
