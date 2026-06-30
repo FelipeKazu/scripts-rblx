@@ -11,29 +11,29 @@ local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
 local rootPart = character:WaitForChild("HumanoidRootPart")
 
--- Configurações
+
 local CONFIG = {
     StartX = -76,
     EndX = 74,
     StartZ = -204,
-    EndZ = -354, -- Note: Z menor é "mais fundo" no mapa
-    Step = 4,    -- Distância entre teleportes (aumente se falhar, diminua para precisão)
-    HeightOffset = 4, -- Altura de segurança acima do chão
-    Delay = 0.00001  -- Tempo entre teleportes
+    EndZ = -354,
+    Step = 4,   
+    HeightOffset = 4, 
+    Delay = 0.00001 
 }
 
--- Estado
+
 local isRunning = false
 local isMinimized = false
 local thread = nil
 
--- ### CRIAÇÃO DA GUI ###
+
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "CAZU_PaintGUI"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = player.PlayerGui
 
--- Frame Principal
+
 local MainFrame = Instance.new("Frame")
 MainFrame.Size = UDim2.new(0, 300, 0, 150)
 MainFrame.Position = UDim2.new(0.5, -150, 0.5, -75)
@@ -42,13 +42,11 @@ MainFrame.BackgroundTransparency = 0.1
 MainFrame.BorderSizePixel = 0
 MainFrame.Parent = ScreenGui
 
--- Borda decorativa
 local Border = Instance.new("UIStroke")
 Border.Color = Color3.fromRGB(0, 255, 100)
 Border.Thickness = 2
 Border.Parent = MainFrame
 
--- Título
 local Title = Instance.new("TextLabel")
 Title.Text = "CAZU | PAINT"
 Title.Size = UDim2.new(1, -40, 0, 30)
@@ -59,7 +57,6 @@ Title.Font = Enum.Font.GothamBold
 Title.TextSize = 16
 Title.Parent = MainFrame
 
--- Botão Fechar (X)
 local CloseBtn = Instance.new("TextButton")
 CloseBtn.Text = "X"
 CloseBtn.Size = UDim2.new(0, 30, 0, 30)
@@ -70,7 +67,6 @@ CloseBtn.Font = Enum.Font.GothamBlack
 CloseBtn.TextSize = 20
 CloseBtn.Parent = MainFrame
 
--- Botão Minimizar (_)
 local MinBtn = Instance.new("TextButton")
 MinBtn.Text = "_"
 MinBtn.Size = UDim2.new(0, 30, 0, 30)
@@ -81,7 +77,6 @@ MinBtn.Font = Enum.Font.GothamBlack
 MinBtn.TextSize = 20
 MinBtn.Parent = MainFrame
 
--- Status Label
 local StatusLabel = Instance.new("TextLabel")
 StatusLabel.Text = "Status: Parado"
 StatusLabel.Size = UDim2.new(1, -20, 0, 20)
@@ -92,7 +87,6 @@ StatusLabel.Font = Enum.Font.Gotham
 StatusLabel.TextSize = 14
 StatusLabel.Parent = MainFrame
 
--- Botão Start/Stop
 local ToggleBtn = Instance.new("TextButton")
 ToggleBtn.Text = "INICIAR"
 ToggleBtn.Size = UDim2.new(1, -40, 0, 40)
@@ -103,7 +97,6 @@ ToggleBtn.Font = Enum.Font.GothamBold
 ToggleBtn.TextSize = 16
 ToggleBtn.Parent = MainFrame
 
--- Botão Minimizado (aparece só quando minimizado)
 local MiniBtn = Instance.new("TextButton")
 MiniBtn.Text = "ABRIR GUI"
 MiniBtn.Size = UDim2.new(0, 120, 0, 40)
@@ -113,10 +106,10 @@ MiniBtn.BorderSizePixel = 1
 MiniBtn.BorderColor3 = Color3.fromRGB(0, 255, 100)
 MiniBtn.TextColor3 = Color3.fromRGB(0, 255, 100)
 MiniBtn.Font = Enum.Font.GothamBold
-MiniBtn.Visible = false -- Começa invisível
+MiniBtn.Visible = false 
 MiniBtn.Parent = ScreenGui
 
--- ### FUNÇÕES DE LÓGICA ###
+
 
 local function updateStatus(text, color)
     StatusLabel.Text = text
@@ -124,7 +117,7 @@ local function updateStatus(text, color)
 end
 
 local function getSafePosition(x, z)
-    -- Raycast para encontrar o chão exato
+   
     local origin = Vector3.new(x, 100, z)
     local direction = Vector3.new(0, -200, 0)
     local params = RaycastParams.new()
@@ -136,7 +129,7 @@ local function getSafePosition(x, z)
     if result then
         return Vector3.new(x, result.Position.Y + CONFIG.HeightOffset, z)
     else
-        -- Fallback se não achar terreno (pode precisar de ajuste no jogo específico)
+
         return Vector3.new(x, 10, z) 
     end
 end
@@ -149,7 +142,7 @@ local function startPainting()
     ToggleBtn.BackgroundColor3 = Color3.fromRGB(150, 0, 0)
 
     thread = task.spawn(function()
-        -- Determinar direção do Z baseada nos valores
+
         local stepZ = CONFIG.StartZ < CONFIG.EndZ and CONFIG.Step or -CONFIG.Step
         
         for x = CONFIG.StartX, CONFIG.EndX, CONFIG.Step do
@@ -158,7 +151,7 @@ local function startPainting()
             for z = CONFIG.StartZ, CONFIG.EndZ, stepZ do
                 if not isRunning then break end
                 
-                -- Verifica se o personagem ainda existe
+            
                 if not character or not rootPart then
                     updateStatus("Erro: Personagem sumiu", Color3.fromRGB(255, 0, 0))
                     break
@@ -166,11 +159,11 @@ local function startPainting()
 
                 local targetPos = getSafePosition(x, z)
                 
-                -- Teleporte seguro
+
                 humanoid.PlatformStand = true
                 rootPart.CFrame = CFrame.new(targetPos)
                 
-                -- Pequena pausa para o jogo registrar a "pintura"
+
                 task.wait(CONFIG.Delay)
                 
                 humanoid.PlatformStand = false
@@ -191,14 +184,14 @@ local function stopPainting()
     isRunning = false
     if thread then task.cancel(thread) end
     
-    -- Retorna controle ao jogador
+    
     humanoid.PlatformStand = false
     updateStatus("Status: Parado", Color3.fromRGB(200, 200, 200))
     ToggleBtn.Text = "INICIAR"
     ToggleBtn.BackgroundColor3 = Color3.fromRGB(0, 150, 0)
 end
 
--- ### EVENTOS DA GUI ###
+
 
 ToggleBtn.MouseButton1Click:Connect(function()
     if isRunning then
@@ -225,7 +218,7 @@ MiniBtn.MouseButton1Click:Connect(function()
     isMinimized = false
 end)
 
--- Atalho de teclado para minimizar/restaurar (Tecla 'M')
+
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
     if gameProcessed then return end
     if input.KeyCode == Enum.KeyCode.M then
@@ -236,7 +229,7 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
         end
     end
 end)
--- HACK: Torna a MainFrame arrastável por clique longo (hold + move)
+
 local dragging = false
 local dragStartPos = Vector2.new()
 local frameStartPos = Vector2.new()
