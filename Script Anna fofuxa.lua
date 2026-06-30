@@ -198,3 +198,6 @@ connection = RunService.RenderStepped:Connect(function(dt)
 	local oz = math.sin(minorOrbitAngle) * 1.5
 	orbitPart.Position = targetPos + Vector3.new(ox, oy, oz)
 end)
+
+
+--07h41m
