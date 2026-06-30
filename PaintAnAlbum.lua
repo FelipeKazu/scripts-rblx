@@ -275,3 +275,6 @@ UserInputService.InputEnded:Connect(onInputEnded)
 
 
 updateStatus("Status: Pronto para iniciar", Color3.fromRGB(255, 255, 255))
+
+
+--4h11m    KAAAZUUU
