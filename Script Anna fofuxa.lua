@@ -339,11 +339,11 @@ local function disablePinkWorld()
 end
 
 
-local oldGui = playerGui:FindFirstChild("TudoROSAA")
+local oldGui = playerGui:FindFirstChild("  TudoROSAA")
 if oldGui then oldGui:Destroy() end
 
 local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "   TudoROSAA  "
+screenGui.Name = "   TudoROSAA   "
 screenGui.ResetOnSpawn = false
 screenGui.Parent = playerGui
 
