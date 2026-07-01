@@ -10,7 +10,7 @@ local player = Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
 local rootPart = character:WaitForChild("HumanoidRootPart")
-
+--Script feito pelo @felipe.kazu
 
 local CONFIG = {
     StartX = -76,
@@ -42,7 +42,7 @@ MainFrame.BackgroundTransparency = 0.1
 MainFrame.BorderSizePixel = 0
 MainFrame.Parent = ScreenGui
 
-local Border = Instance.new("UIStroke")
+local Border = Instance.new("UIStroke")--Script feito pelo @felipe.kazu
 Border.Color = Color3.fromRGB(0, 255, 100)
 Border.Thickness = 2
 Border.Parent = MainFrame
@@ -70,7 +70,7 @@ CloseBtn.Parent = MainFrame
 local MinBtn = Instance.new("TextButton")
 MinBtn.Text = "_"
 MinBtn.Size = UDim2.new(0, 30, 0, 30)
-MinBtn.Position = UDim2.new(1, -80, 0, 0)
+MinBtn.Position = UDim2.new(1, -80, 0, 0)--Script feito pelo @felipe.kazu
 MinBtn.BackgroundTransparency = 1
 MinBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 MinBtn.Font = Enum.Font.GothamBlack
@@ -90,7 +90,7 @@ StatusLabel.Parent = MainFrame
 local ToggleBtn = Instance.new("TextButton")
 ToggleBtn.Text = "INICIAR"
 ToggleBtn.Size = UDim2.new(1, -40, 0, 40)
-ToggleBtn.Position = UDim2.new(0, 20, 0, 70)
+ToggleBtn.Position = UDim2.new(0, 20, 0, 70)--Script feito pelo @felipe.kazu
 ToggleBtn.BackgroundColor3 = Color3.fromRGB(0, 150, 0)
 ToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 ToggleBtn.Font = Enum.Font.GothamBold
@@ -165,7 +165,7 @@ local function startPainting()
                 
 
                 task.wait(CONFIG.Delay)
-                
+                --Script feito pelo @felipe.kazu
                 humanoid.PlatformStand = false
             end
         end
@@ -211,7 +211,7 @@ MinBtn.MouseButton1Click:Connect(function()
     MiniBtn.Visible = true
     isMinimized = true
 end)
-
+--Script feito pelo @felipe.kazu
 MiniBtn.MouseButton1Click:Connect(function()
     MainFrame.Visible = true
     MiniBtn.Visible = false
@@ -254,7 +254,7 @@ local function onInputMoved(input)
         frameStartPos.Y + delta.Y
     )
 end
-
+--Script feito pelo @felipe.kazu
 local function onInputEnded(input, gameProcessed)
     if gameProcessed then return end
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
