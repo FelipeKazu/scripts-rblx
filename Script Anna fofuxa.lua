@@ -1,5 +1,5 @@
 --Script feito pelo @felipe.kazu
---Anna, saudades 
+--Para a Anna
 
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
